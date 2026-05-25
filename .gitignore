@@ -4,6 +4,8 @@ punto2_lambda/validator/package/
 punto2_lambda/validator/lambda_validator.zip
 tmp_lambda_event.json
 tmp_lambda_response.json
+.coverage
+.pytest_cache/
 *.pyc
 __pycache__/
 .venv/

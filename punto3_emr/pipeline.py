@@ -4,7 +4,6 @@ import argparse
 
 from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql import functions as F
-from pyspark.sql import types as T
 from pyspark.sql.window import Window
 
 
@@ -151,15 +150,24 @@ def metric_conversion_funnel(events: DataFrame) -> DataFrame:
     return (
         counts.withColumn(
             "stage2_over_stage1_pct",
-            F.when(F.col("stage1_page_view_users") > 0, F.col("stage2_product_view_users") / F.col("stage1_page_view_users") * 100),
+            F.when(
+                F.col("stage1_page_view_users") > 0,
+                F.col("stage2_product_view_users") / F.col("stage1_page_view_users") * 100,
+            ),
         )
         .withColumn(
             "stage3_over_stage2_pct",
-            F.when(F.col("stage2_product_view_users") > 0, F.col("stage3_cart_add_users") / F.col("stage2_product_view_users") * 100),
+            F.when(
+                F.col("stage2_product_view_users") > 0,
+                F.col("stage3_cart_add_users") / F.col("stage2_product_view_users") * 100,
+            ),
         )
         .withColumn(
             "stage4_over_stage3_pct",
-            F.when(F.col("stage3_cart_add_users") > 0, F.col("stage4_checkout_users") / F.col("stage3_cart_add_users") * 100),
+            F.when(
+                F.col("stage3_cart_add_users") > 0,
+                F.col("stage4_checkout_users") / F.col("stage3_cart_add_users") * 100,
+            ),
         )
     )
 
@@ -190,7 +198,9 @@ def metric_high_view_low_cart(events: DataFrame) -> DataFrame:
     views_p75 = quantiles[0][1] if quantiles and quantiles[0] and len(quantiles[0]) > 1 else 0
 
     return (
-        product_metrics.filter((F.col("view_count") > F.lit(views_p75)) & (F.col("cart_add_count") < F.lit(cart_p25)))
+        product_metrics.filter(
+            (F.col("view_count") > F.lit(views_p75)) & (F.col("cart_add_count") < F.lit(cart_p25))
+        )
         .select("product_id", "category", "avg_price", "view_count", "cart_add_count", "conversion_rate")
         .orderBy(F.desc("view_count"), F.asc("cart_add_count"))
     )
@@ -230,7 +240,10 @@ def metric_anomalies(events: DataFrame) -> DataFrame:
         .withColumn("std_time", F.stddev("time_on_page_seconds").over(stats_window))
         .withColumn(
             "z_score",
-            F.when(F.col("std_time") > 0, (F.col("time_on_page_seconds") - F.col("mean_time")) / F.col("std_time")).otherwise(0.0),
+            F.when(
+                F.col("std_time") > 0,
+                (F.col("time_on_page_seconds") - F.col("mean_time")) / F.col("std_time"),
+            ).otherwise(0.0),
         )
     )
 
