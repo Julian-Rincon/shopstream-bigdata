@@ -99,6 +99,12 @@ cd api
 zappa deploy production
 ```
 
+## Security Notes
+
+This repository was built in an AWS Academy lab environment. For the class demo, PostgreSQL access on the RDS security group is restricted to the current public demo IP with a `/32` CIDR rule. The previous broad `0.0.0.0/0` PostgreSQL rule was removed.
+
+In a production deployment, RDS should not be publicly reachable. The API Lambda should run inside private VPC subnets with security-group-to-security-group access to RDS, or connect through an approved private networking pattern such as VPC peering or a private endpoint. Public RDS access is not recommended for production workloads.
+
 ## API Endpoints
 
 Health check:

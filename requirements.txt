@@ -3,3 +3,6 @@ pandas
 numpy
 boto3
 python-dotenv
+sqlalchemy
+pyarrow
+s3fs
