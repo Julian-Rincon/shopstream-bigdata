@@ -171,6 +171,11 @@ def anomalies():
     if not validate_date(date):
         return error_response("date must use YYYY-MM-DD format", 400)
 
+    count_query = """
+        SELECT COUNT(*) AS total
+        FROM shopstream_dwh.fact_anomalies
+        WHERE date = %s
+    """
     query = """
         SELECT
             session_id,
@@ -181,14 +186,17 @@ def anomalies():
         FROM shopstream_dwh.fact_anomalies
         WHERE date = %s
         ORDER BY ABS(z_score) DESC
+        LIMIT 100
     """
     try:
+        total_rows = rows_to_json(fetch_all(count_query, (date,)))
         anomalies_data = rows_to_json(fetch_all(query, (date,)))
     except (DatabaseError, KeyError) as exc:
         return error_response(f"database error: {exc}", 500)
     if not anomalies_data:
         return error_response("no data found", 404)
-    return jsonify({"date": date, "total": len(anomalies_data), "anomalies": anomalies_data})
+    total = int(total_rows[0].get("total", len(anomalies_data))) if total_rows else len(anomalies_data)
+    return jsonify({"date": date, "total": total, "returned": len(anomalies_data), "anomalies": anomalies_data})
 
 
 if __name__ == "__main__":

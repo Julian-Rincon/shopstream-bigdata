@@ -6,6 +6,19 @@
     "s3_bucket": "shopstream-scripts-401466721010",
     "manage_roles": false,
     "role_arn": "arn:aws:iam::401466721010:role/LabRole",
+    "vpc_config": {
+      "SubnetIds": [
+        "subnet-05f2110957149c8c4",
+        "subnet-0fa7e2d4adcbff640",
+        "subnet-0a768a60eae84507d",
+        "subnet-0af6d9c7a98fd846e",
+        "subnet-05e2f0ac7adbe0956",
+        "subnet-032a3b0998beb01a5"
+      ],
+      "SecurityGroupIds": [
+        "sg-0f3b916c924e5facb"
+      ]
+    },
     "environment_variables": {
       "RDS_HOST": "shopstream-dwh.cvvut83qa9ha.us-east-1.rds.amazonaws.com",
       "RDS_PORT": "5432",
