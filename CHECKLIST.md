@@ -10,7 +10,7 @@
 | EMR cluster | j-1D7UG34TYVYLW, TERMINATED, ALL_STEPS_COMPLETED | ✅ |
 | RDS PostgreSQL | db.t3.micro, postgres 15.18, available, 97,410 filas fact | ✅ |
 | Glue ETL job | shopstream-etl-s3-to-rds, último run SUCCEEDED | ✅ |
-| Glue visual ETL | Screenshot en punto4_glue/glue_studio_screenshot.png, grafo visual con Data Quality node | ✅ |
+| Glue visual ETL | Screenshot en glue_etl/glue_studio_screenshot.png, grafo visual con Data Quality node | ✅ |
 | Glue workflow | shopstream-workflow, schedule 2AM UTC + trigger condicional ACTIVATED | ✅ |
 | API Gateway | /health + 3 endpoints analíticos, Lambda api-production en VPC | ✅ |
 | CI/CD | GitHub Actions, run #9 green al verificar | ✅ |

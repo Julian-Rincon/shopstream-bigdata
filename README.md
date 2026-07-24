@@ -21,10 +21,10 @@ The API layer is a Flask application deployed on AWS Lambda/API Gateway with Zap
 
 ## Components
 
-- `punto1_datagen/`: synthetic data generator and S3 upload script.
-- `punto2_lambda/`: S3-triggered Lambda validator with CloudWatch metrics and quarantine handling.
-- `punto3_emr/`: PySpark EMR pipeline that produces analytics Parquet datasets.
-- `punto4_glue/`: RDS DWH schema and Glue Studio workflow documentation.
+- `data_generation/`: synthetic data generator and S3 upload script.
+- `lambda_validator/`: S3-triggered Lambda validator with CloudWatch metrics and quarantine handling.
+- `emr_analytics/`: PySpark EMR pipeline that produces analytics Parquet datasets.
+- `glue_etl/`: RDS DWH schema and Glue Studio workflow documentation.
 - `api/`: Flask API, Zappa configuration, and endpoint tests.
 - `.github/workflows/ci.yml`: lint, test, and deploy pipeline for GitHub Actions.
 
@@ -67,11 +67,11 @@ flask --app app run
 Generate and upload raw data:
 
 ```bash
-python punto1_datagen/generate_data.py
-python punto1_datagen/upload_to_s3.py
+python data_generation/generate_data.py
+python data_generation/upload_to_s3.py
 ```
 
-Deploy the Lambda validator by packaging `punto2_lambda/validator` and uploading the deployment zip to the scripts bucket. Configure the S3 notification in `punto2_lambda/s3_trigger.json`.
+Deploy the Lambda validator by packaging `lambda_validator/validator` and uploading the deployment zip to the scripts bucket. Configure the S3 notification in `lambda_validator/s3_trigger.json`.
 
 Run the EMR Spark pipeline:
 
@@ -89,7 +89,7 @@ Create the RDS schema:
 
 ```bash
 psql "host=$RDS_HOST port=5432 dbname=shopstream_dwh user=shopstream_admin" \
-  -f punto4_glue/rds_schema.sql
+  -f glue_etl/rds_schema.sql
 ```
 
 Deploy the API:
