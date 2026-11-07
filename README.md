@@ -145,3 +145,8 @@ curl "$API_URL/anomalies?date=2025-06-01"
 - PySpark
 - Flask, psycopg2, Zappa
 - GitHub Actions, pytest, flake8
+
+---
+
+<!-- julian-rincon-footer -->
+<p align="center"><sub>Built by <b>Julián Rincón</b> · <a href="https://julian-rincon.github.io/#p-shopstream">Portfolio</a> · <a href="https://www.linkedin.com/in/julian-esteban-rinc%C3%B3n-rodriguez-1a05501b7/">LinkedIn</a> · <a href="https://github.com/Julian-Rincon">GitHub</a></sub></p>
