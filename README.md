@@ -5,6 +5,8 @@
 ![PySpark](https://img.shields.io/badge/PySpark-3.4-red)
 ![Build](https://github.com/Julian-Rincon/shopstream-bigdata/actions/workflows/ci.yml/badge.svg)
 
+<p align="center"><a href="https://julian-rincon.github.io/assets/videos/shopstream.mp4"><img src="https://julian-rincon.github.io/assets/videos/shopstream.jpg" width="720" alt="▶ Watch the video (~1 min, subtitled)"></a><br><sub>▶ Watch the video (~1 min, subtitled)</sub></p>
+
 ShopStream is an end-to-end AWS big data pipeline for a fictional e-commerce platform. It generates synthetic behavioral data, validates ingestion, computes analytics with Spark, stores warehouse tables in PostgreSQL, and exposes business metrics through a Flask API deployed with Zappa.
 
 ## Architecture
