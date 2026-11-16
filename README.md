@@ -139,6 +139,34 @@ Anomalies:
 curl "$API_URL/anomalies?date=2025-06-01"
 ```
 
+## How it's measured
+
+Every figure cited for this project can be reproduced with one command.
+Measured on 2026-11-16 (Python 3.14, latest releases of the dependencies in
+`requirements.txt` / `api/requirements.txt`; CI uses Python 3.11).
+
+| Metric | Value | Command (from the repo root) | Measured |
+|---|---|---|---|
+| Tests | 6 passed, 0 failed | `pytest api/tests/` | 2026-11-16 |
+| Test coverage (as CI computes it) | 86 % (143 of 167 statements) | `pytest api/tests/ --cov=api --cov-report=term` | 2026-11-16 |
+| Coverage of the application code only | 79 % (`api/app.py`, 89 of 113 statements) | same command, `api/app.py` row | 2026-11-16 |
+| Coverage gate in CI | fails below 65 % | `--cov-fail-under=65` in `.github/workflows/` | 2026-11-16 |
+
+**Criteria.**
+
+- Tests are counted when they **pass**, not when they are collected.
+- Coverage is line (statement) coverage from `pytest-cov`, measured over the
+  `api` package. Blank lines and comments are not statements, so they are not
+  counted. The 86 % headline is the `TOTAL` row, which also includes the test
+  file itself (54 statements, 100 %); the 79 % row is the application code
+  alone. Branch coverage is not measured.
+- `glue_etl/`, `emr_analytics/`, `lambda_validator/` and `data_generation/`
+  are outside the coverage scope: they need AWS services and are not
+  covered by these tests.
+- Setup: `pip install pytest pytest-cov -r requirements.txt -r api/requirements.txt`.
+  On Python 3.14 the pinned `psycopg2-binary==2.9.9` does not build; use
+  Python 3.11 (as CI does) or a newer `psycopg2-binary`.
+
 ## Tech Stack
 
 - Python 3.11
